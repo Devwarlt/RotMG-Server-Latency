@@ -21,6 +21,7 @@ namespace RotMG_Server_Latency
         public static List<PingHandler> ROTMG_SERVER_PING_HANDLERS = new List<PingHandler>();
         public static readonly List<string> ROTMG_SERVERS_DATA = new List<string>
         {
+            //"Localhost:127.0.0.1",
             "USWest:54.153.32.11",
             "USMidWest:18.220.226.127",
             "EUWest:52.47.149.74",
@@ -146,7 +147,8 @@ namespace RotMG_Server_Latency
             {
                 this.Box = Box;
                 this.Box.Enabled = false;
-                this.Box.Text = "???";
+                this.Box.Text = "unknown";
+                this.Box.TextAlign = HorizontalAlignment.Center;
 
                 this.IP = IP;
             }
@@ -166,7 +168,7 @@ namespace RotMG_Server_Latency
                             Thread.Sleep(TTL * 1000);
                         } else
                         {
-                            Box.Text = "...";
+                            Box.Text = "loading...";
                             Thread.Sleep(2 * 1000);
                         }
                     } while (true);

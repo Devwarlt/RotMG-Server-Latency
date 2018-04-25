@@ -86,6 +86,7 @@
             // splitter1
             // 
             this.splitter1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitter1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.splitter1.Location = new System.Drawing.Point(0, 0);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(294, 378);
@@ -271,6 +272,7 @@
             // splitter2
             // 
             this.splitter2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitter2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter2.Location = new System.Drawing.Point(300, 0);
             this.splitter2.Name = "splitter2";
