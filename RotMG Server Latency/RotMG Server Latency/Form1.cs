@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,8 +14,11 @@ namespace RotMG_Server_Latency
 {
     public partial class Form1 : Form
     {
+        public static int TTL = 60; // in seconds
         public static List<Server> ROTMG_SERVERS = new List<Server>();
-
+        public static List<Label> ROTMG_SERVER_LABELS = new List<Label>();
+        public static List<TextBox> ROTMG_SERVER_BOXES = new List<TextBox>();
+        public static List<PingHandler> ROTMG_SERVER_PING_HANDLERS = new List<PingHandler>();
         public static readonly List<string> ROTMG_SERVERS_DATA = new List<string>
         {
             "USWest:54.153.32.11",
@@ -72,7 +77,102 @@ namespace RotMG_Server_Latency
         {
             ROTMG_SERVERS = SerializeServers(ROTMG_SERVERS_DATA);
 
+            #region "Labels"
+            ROTMG_SERVER_LABELS.Add(label1);
+            ROTMG_SERVER_LABELS.Add(label2);
+            ROTMG_SERVER_LABELS.Add(label3);
+            ROTMG_SERVER_LABELS.Add(label4);
+            ROTMG_SERVER_LABELS.Add(label5);
+            ROTMG_SERVER_LABELS.Add(label6);
+            ROTMG_SERVER_LABELS.Add(label7);
+            ROTMG_SERVER_LABELS.Add(label8);
+            ROTMG_SERVER_LABELS.Add(label9);
+            ROTMG_SERVER_LABELS.Add(label10);
+            ROTMG_SERVER_LABELS.Add(label11);
+            ROTMG_SERVER_LABELS.Add(label12);
+            ROTMG_SERVER_LABELS.Add(label13);
+            ROTMG_SERVER_LABELS.Add(label14);
+            ROTMG_SERVER_LABELS.Add(label15);
+            ROTMG_SERVER_LABELS.Add(label16);
+            ROTMG_SERVER_LABELS.Add(label17);
+            ROTMG_SERVER_LABELS.Add(label18);
+            ROTMG_SERVER_LABELS.Add(label19);
+            ROTMG_SERVER_LABELS.Add(label20);
+            ROTMG_SERVER_LABELS.Add(label21);
+            ROTMG_SERVER_LABELS.Add(label22);
+            #endregion
 
+            for (int i = 0; i < ROTMG_SERVER_LABELS.Count; i++)
+                ROTMG_SERVER_LABELS[i].Text = ROTMG_SERVERS[i].Name;
+
+            #region "Boxes"
+            ROTMG_SERVER_BOXES.Add(textBox1);
+            ROTMG_SERVER_BOXES.Add(textBox2);
+            ROTMG_SERVER_BOXES.Add(textBox3);
+            ROTMG_SERVER_BOXES.Add(textBox4);
+            ROTMG_SERVER_BOXES.Add(textBox5);
+            ROTMG_SERVER_BOXES.Add(textBox6);
+            ROTMG_SERVER_BOXES.Add(textBox7);
+            ROTMG_SERVER_BOXES.Add(textBox8);
+            ROTMG_SERVER_BOXES.Add(textBox9);
+            ROTMG_SERVER_BOXES.Add(textBox10);
+            ROTMG_SERVER_BOXES.Add(textBox11);
+            ROTMG_SERVER_BOXES.Add(textBox12);
+            ROTMG_SERVER_BOXES.Add(textBox13);
+            ROTMG_SERVER_BOXES.Add(textBox14);
+            ROTMG_SERVER_BOXES.Add(textBox15);
+            ROTMG_SERVER_BOXES.Add(textBox16);
+            ROTMG_SERVER_BOXES.Add(textBox17);
+            ROTMG_SERVER_BOXES.Add(textBox18);
+            ROTMG_SERVER_BOXES.Add(textBox19);
+            ROTMG_SERVER_BOXES.Add(textBox20);
+            ROTMG_SERVER_BOXES.Add(textBox21);
+            ROTMG_SERVER_BOXES.Add(textBox22);
+            #endregion
+
+            for (int j = 0; j < ROTMG_SERVER_BOXES.Count; j++)
+                ROTMG_SERVER_PING_HANDLERS.Add(new PingHandler(ROTMG_SERVER_BOXES[j], ROTMG_SERVERS[j].IP));
+
+            foreach(PingHandler k in ROTMG_SERVER_PING_HANDLERS)
+                k.BeginThread();
+        }
+
+        public class PingHandler
+        {
+            public TextBox Box { get; private set; }
+            public string IP { get; private set; }
+
+            public PingHandler(TextBox Box, string IP)
+            {
+                this.Box = Box;
+                this.Box.Enabled = false;
+                this.Box.Text = "???";
+
+                this.IP = IP;
+            }
+
+            public void BeginThread()
+            {
+                Thread thread = new Thread(() =>
+                {
+                    Ping ping = new Ping();
+                    PingReply pingReply = ping.Send(IP);
+
+                    do
+                    {
+                        if (pingReply.Status == IPStatus.Success)
+                        {
+                            Box.Text = $"{pingReply.RoundtripTime.ToString()} ms";
+                            Thread.Sleep(TTL * 1000);
+                        } else
+                        {
+                            Box.Text = "...";
+                            Thread.Sleep(2 * 1000);
+                        }
+                    } while (true);
+                });
+                thread.Start();
+            }
         }
     }
 }
