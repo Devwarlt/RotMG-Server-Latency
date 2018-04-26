@@ -1,13 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net.NetworkInformation;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RotMG_Server_Latency
@@ -21,7 +15,6 @@ namespace RotMG_Server_Latency
         public static List<PingHandler> ROTMG_SERVER_PING_HANDLERS = new List<PingHandler>();
         public static readonly List<string> ROTMG_SERVERS_DATA = new List<string>
         {
-            //"Localhost:127.0.0.1",
             "USWest:54.153.32.11",
             "USMidWest:18.220.226.127",
             "EUWest:52.47.149.74",
@@ -44,7 +37,8 @@ namespace RotMG_Server_Latency
             "EUSouth:52.47.150.186",
             "USSouth2:54.183.236.213",
             "USWest3:54.67.119.179",
-            "Australia:54.252.165.65"
+            "Australia:54.252.165.65",
+            "Localhost:127.0.0.1"
         };
 
         public class Server
@@ -101,6 +95,8 @@ namespace RotMG_Server_Latency
             ROTMG_SERVER_LABELS.Add(label20);
             ROTMG_SERVER_LABELS.Add(label21);
             ROTMG_SERVER_LABELS.Add(label22);
+            ROTMG_SERVER_LABELS.Add(label23);
+            ROTMG_SERVER_LABELS.Add(label24);
             #endregion
 
             for (int i = 0; i < ROTMG_SERVER_LABELS.Count; i++)
@@ -129,12 +125,14 @@ namespace RotMG_Server_Latency
             ROTMG_SERVER_BOXES.Add(textBox20);
             ROTMG_SERVER_BOXES.Add(textBox21);
             ROTMG_SERVER_BOXES.Add(textBox22);
+            ROTMG_SERVER_BOXES.Add(textBox23);
+            ROTMG_SERVER_BOXES.Add(textBox24);
             #endregion
 
             for (int j = 0; j < ROTMG_SERVER_BOXES.Count; j++)
                 ROTMG_SERVER_PING_HANDLERS.Add(new PingHandler(ROTMG_SERVER_BOXES[j], ROTMG_SERVERS[j].IP));
 
-            foreach(PingHandler k in ROTMG_SERVER_PING_HANDLERS)
+            foreach (PingHandler k in ROTMG_SERVER_PING_HANDLERS)
                 k.BeginThread();
         }
 
@@ -164,16 +162,27 @@ namespace RotMG_Server_Latency
                     {
                         if (pingReply.Status == IPStatus.Success)
                         {
-                            Box.Text = $"{pingReply.RoundtripTime.ToString()} ms";
+                            UpdateBox($"{pingReply.RoundtripTime.ToString()} ms");
                             Thread.Sleep(TTL * 1000);
-                        } else
+                        }
+                        else
                         {
-                            Box.Text = "loading...";
+                            UpdateBox("loading...");
                             Thread.Sleep(2 * 1000);
                         }
                     } while (true);
                 });
                 thread.Start();
+            }
+
+            delegate void callback(string text);
+
+            private void UpdateBox(string message)
+            {
+                if (Box.InvokeRequired)
+                    Box.Invoke(new callback(UpdateBox), new object[] { message });
+                else
+                    Box.Text = message;
             }
         }
     }
