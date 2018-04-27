@@ -1,14 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace RotMG_Server_Latency
 {
+    /** RotMG Server Latency
+     * Author: Devwarlt
+     * 
+     * An open source software to check RotMG server latencies.
+     */
+
     public partial class Form1 : Form
     {
-        public static int TTL = 60; // in seconds
+        #region "Settings"
+        public static readonly string GITHUB = "https://github.com/Devwarlt/RotMG-Server-Latency";
+        public static readonly string REALMEYE = "https://realmeye.com/player/Devwarlt";
+        public static readonly List<string> ROTMG_SERVER_TTLS = new List<string>
+        {
+            "5 s",
+            "10 s",
+            "30 s",
+            "60 s"
+        };
+        public static int TTL = GetTTL(ROTMG_SERVER_TTLS.Count - 1);
         public static List<Server> ROTMG_SERVERS = new List<Server>();
         public static List<Label> ROTMG_SERVER_LABELS = new List<Label>();
         public static List<TextBox> ROTMG_SERVER_BOXES = new List<TextBox>();
@@ -40,18 +57,7 @@ namespace RotMG_Server_Latency
             "Australia:54.252.165.65",
             "Localhost:127.0.0.1"
         };
-
-        public class Server
-        {
-            public string Name { get; private set; }
-            public string IP { get; private set; }
-
-            public Server(string Name, string IP)
-            {
-                this.Name = Name;
-                this.IP = IP;
-            }
-        }
+        #endregion
 
         private List<Server> SerializeServers(List<string> data)
         {
@@ -64,12 +70,23 @@ namespace RotMG_Server_Latency
         }
 
         public Form1()
-        {
-            InitializeComponent();
-        }
+        { InitializeComponent(); }
+
+        private static int GetTTL(int index) =>
+            Convert.ToInt32(ROTMG_SERVER_TTLS[index].Split(' ')[0]);
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ControlBox = false;
+
+            for (int h = 0; h < ROTMG_SERVER_TTLS.Count; h++)
+                comboBox1.Items.Add(ROTMG_SERVER_TTLS[h]);
+
+            comboBox1.SelectedIndex = ROTMG_SERVER_TTLS.Count - 1;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+
+            label26.Text = $"{GetTTL(comboBox1.SelectedIndex)} seconds";
+
             ROTMG_SERVERS = SerializeServers(ROTMG_SERVERS_DATA);
 
             #region "Labels"
@@ -136,6 +153,19 @@ namespace RotMG_Server_Latency
                 k.BeginThread();
         }
 
+        #region "Custom classes"
+        public class Server
+        {
+            public string Name { get; private set; }
+            public string IP { get; private set; }
+
+            public Server(string Name, string IP)
+            {
+                this.Name = Name;
+                this.IP = IP;
+            }
+        }
+
         public class PingHandler
         {
             public TextBox Box { get; private set; }
@@ -185,5 +215,21 @@ namespace RotMG_Server_Latency
                     Box.Text = message;
             }
         }
+        #endregion
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TTL = GetTTL(comboBox1.SelectedIndex);
+            label26.Text = $"{TTL} seconds";
+        }
+
+        private void button2_Click(object sender, EventArgs e) =>
+            Environment.Exit(0);
+
+        private void realmeye_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) =>
+            Process.Start(REALMEYE);
+
+        private void github_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) =>
+            Process.Start(GITHUB);
     }
 }

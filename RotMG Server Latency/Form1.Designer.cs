@@ -83,6 +83,11 @@
             this.label24 = new System.Windows.Forms.Label();
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.textBox24 = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -93,7 +98,7 @@
             this.splitter1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.splitter1.Location = new System.Drawing.Point(0, 0);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(294, 391);
+            this.splitter1.Size = new System.Drawing.Size(294, 404);
             this.splitter1.TabIndex = 71;
             this.splitter1.TabStop = false;
             // 
@@ -280,7 +285,7 @@
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter2.Location = new System.Drawing.Point(300, 0);
             this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(320, 391);
+            this.splitter2.Size = new System.Drawing.Size(320, 404);
             this.splitter2.TabIndex = 94;
             this.splitter2.TabStop = false;
             // 
@@ -463,7 +468,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = global::RotMG_Server_Latency.Properties.Resources.github;
-            this.pictureBox2.Location = new System.Drawing.Point(486, 347);
+            this.pictureBox2.Location = new System.Drawing.Point(490, 356);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(36, 36);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -473,7 +478,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::RotMG_Server_Latency.Properties.Resources.eye;
-            this.pictureBox1.Location = new System.Drawing.Point(369, 348);
+            this.pictureBox1.Location = new System.Drawing.Point(373, 357);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(36, 36);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -485,23 +490,25 @@
             this.github.AutoSize = true;
             this.github.BackColor = System.Drawing.SystemColors.Control;
             this.github.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.github.Location = new System.Drawing.Point(523, 359);
+            this.github.Location = new System.Drawing.Point(527, 368);
             this.github.Name = "github";
             this.github.Size = new System.Drawing.Size(40, 13);
             this.github.TabIndex = 96;
             this.github.TabStop = true;
             this.github.Text = "GitHub";
+            this.github.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.github_LinkClicked);
             // 
             // realmeye
             // 
             this.realmeye.AutoSize = true;
             this.realmeye.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.realmeye.Location = new System.Drawing.Point(403, 359);
+            this.realmeye.Location = new System.Drawing.Point(407, 368);
             this.realmeye.Name = "realmeye";
             this.realmeye.Size = new System.Drawing.Size(55, 13);
             this.realmeye.TabIndex = 95;
             this.realmeye.TabStop = true;
             this.realmeye.Text = "RealmEye";
+            this.realmeye.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.realmeye_LinkClicked);
             // 
             // label23
             // 
@@ -535,12 +542,68 @@
             this.textBox24.Size = new System.Drawing.Size(100, 20);
             this.textBox24.TabIndex = 124;
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(96, 370);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(100, 21);
+            this.comboBox1.TabIndex = 125;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.Location = new System.Drawing.Point(204, 368);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 127;
+            this.button1.Text = "Update TTL";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(34, 347);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(30, 13);
+            this.label25.TabIndex = 128;
+            this.label25.Text = "TTL";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(70, 347);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(41, 13);
+            this.label26.TabIndex = 129;
+            this.label26.Text = "label26";
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button2.Location = new System.Drawing.Point(12, 369);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 130;
+            this.button2.Text = "Exit";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(620, 391);
+            this.ClientSize = new System.Drawing.Size(620, 404);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.textBox24);
             this.Controls.Add(this.textBox23);
             this.Controls.Add(this.label24);
@@ -665,6 +728,11 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox textBox23;
         private System.Windows.Forms.TextBox textBox24;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Button button2;
     }
 }
 
